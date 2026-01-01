@@ -9,7 +9,7 @@ with open("xgb_car_price_model.pkl", "rb") as f:
     model = pickle.load(f)
 
 @app.route("/predict", methods=["POST"])
-def predict_price():
+def predict():
     data = request.json
 
     # Extract inputs
@@ -39,4 +39,4 @@ def predict_price():
     })
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000)

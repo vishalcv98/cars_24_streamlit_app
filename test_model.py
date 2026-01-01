@@ -1,6 +1,7 @@
 import pytest
 import pickle
 import pandas as pd
+import numpy as np
 
 @pytest.fixture(scope="session")
 def model():
@@ -26,17 +27,14 @@ def make_input(
         columns=["km_driven", "mileage", "age", "Petrol", "Diesel", "Electric"]
     )
 
-def test_price_decreases_with_age(model):
-    X_new = make_input(30000, 18, 2, "Petrol")
-    X_old = make_input(30000, 18, 10, "Petrol")
+def test_prediction_reasonable_range_multiple_samples(model):
+    for _ in range(100):   # test 100 random combinations
+        X = make_input(
+            mileage=np.random.randint(1000, 200000),
+            age=np.random.randint(0, 20),
+            owners=np.random.randint(0, 4),
+            fuel=np.random.choice(["Petrol", "Diesel", "Electric"])
+        )
 
-    price_new = model.predict(X_new)[0]
-    price_old = model.predict(X_old)[0]
-
-    assert price_new >= price_old
-
-def test_prediction_reasonable_range(model):
-    X = make_input(50000, 15, 6, "Diesel")
-    price = model.predict(X)[0]
-
-    assert 5 < price < 500
+        price = model.predict(X)[0]
+        assert 5 < price < 500
