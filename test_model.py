@@ -32,7 +32,7 @@ def test_prediction_reasonable_range_multiple_samples(model):
         X = make_input(
             mileage=np.random.randint(1000, 200000),
             age=np.random.randint(0, 20),
-            owners=np.random.randint(0, 4),
+            km_driven=np.random.randint(5000, 300000),
             fuel=np.random.choice(["Petrol", "Diesel", "Electric"])
         )
 
