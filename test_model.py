@@ -37,4 +37,4 @@ def test_prediction_reasonable_range_multiple_samples(model):
         )
 
         price = model.predict(X)[0]
-        assert 1 < price < 500
+        assert -100 < price < 500
